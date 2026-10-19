@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
 import Reveal from '../components/Reveal.jsx'
 import Counter from '../components/Counter.jsx'
 import HeroParticles from '../components/HeroParticles.jsx'
@@ -96,11 +97,31 @@ const COMMITMENT_PANELS = [
 ]
 
 export default function Home() {
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const video = heroRef.current?.querySelector('video')
+    if (video) {
+      video.play()
+    }
+  }, [])
+
   return (
     <>
       {/* HERO */}
       <section className="hero">
-        <div className="hero-bg" style={{ backgroundImage: "url('/images/hero-mine.jpg')" }} aria-hidden="true" />
+        <div className="hero-bg">
+          <video
+            ref={heroRef}
+            muted
+            playsInline
+            autoPlay
+            loop
+            className="hero-video"
+          >
+            <source src="/video.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div className="hero-overlay" aria-hidden="true" />
         <HeroParticles />
         <div className="hero-content">
